@@ -5,19 +5,19 @@ RESET='\033[0m'
 BRIGHT_BOLD_GREEN='\033[1;92m'
 WHITE_BOLD='\033[1;208m'
 
-# Update GPG Key & Update Package Lists
 update_gpg(){
     printf "${BRIGHT_BOLD_GREEN}Updating GPG Key...${RESET}\n"
     sudo wget https://archive.kali.org/archive-key.asc -O /etc/apt/trusted.gpg.d/kali-archive-keyring.asc
 
-    printf "${BRIGHT_BOLD_GREEN}GPG Update Done.\n"
+    printf "${BRIGHT_BOLD_GREEN}GPG Update Done."
 
-    printf "${BRIGHT_BOLD_GREEN}Updating kali...${RESET}\n"
+    printf "${BRIGHT_BOLD_GREEN}Updating kali...${RESET}"
     sudo apt update -y
+
+    printf "${BRIGHT_BOLD_GREEN}Thank you for your patience, happy hacking!\n${RESET}"
 }
 update_gpg
 
-# Download and Install Fortinet Cert System-Wide
 fix_ssl(){
     printf "\n${BRIGHT_BOLD_GREEN}Fixing SSL${RESET}\n"
     sudo apt install libnss3-tools -y
@@ -28,13 +28,29 @@ fix_ssl(){
 
     sudo cp Fortinet_CA_SSL.cer /usr/local/share/ca-certificates/extra/
 
-    sudo mv /usr/local/share/ca-certificates/extra/Fortinet_CA_SSL.cer /usr/local/share/ca-certificates/extra/root.crt
+    sudo cp /usr/local/share/ca-certificates/extra/Fortinet_CA_SSL.cer /usr/local/share/ca-certificates/extra/root.crt
 
     sudo update-ca-certificates
 
-    printf "${BRIGHT_BOLD_GREEN}SSL fixed${RESET}\n"
+    printf "\n${BRIGHT_BOLD_GREEN}System Wide Certificate Added.${RESET}\n"
 
 }
 fix_ssl
 
-printf "${BRIGHT_BOLD_GREEN}Thank you for your patience, happy hacking!\n${RESET}"
+firefox_ssl(){
+    printf "\n${WHITE_BOLD}Adding Cert to Firefox...${RESET}"
+    sleep 2
+    sudo rm /usr/lib/firefox/distribution/policies.json
+    sudo echo -e '''{
+    "policies": {
+        "Certificates": {
+            "Install": [
+                "/usr/local/share/ca-certificates/extra/Fortinet_CA_SSL.cer"
+            ]
+        }
+    }
+}''' >> /usr/lib/firefox/distribution/policies.json
+
+    printf "\n${BRIGHT_BOLD_GREEN}\nAll finished :) ${RESET}\n"
+}
+firefox_ssl
