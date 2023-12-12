@@ -40,16 +40,38 @@ fix_ssl
 firefox_ssl(){
     printf "\n${WHITE_BOLD}Adding Cert to Firefox...${RESET}"
     sleep 2
-    sudo rm /usr/lib/firefox/distribution/policies.json
+    sudo rm /usr/lib/firefox-esr/distribution/policies.json
     sudo echo -e '''{
     "policies": {
         "Certificates": {
             "Install": [
-                "/usr/local/share/ca-certificates/extra/Fortinet_CA_SSL.cer"
-            ]
+                "/usr/local/share/ca-certificates/extra/Fortinet_CA_SSL.cer"]
         }
-    }
-}''' >> /usr/lib/firefox/distribution/policies.json
+    },
+    "DisplayBookmarksToolbar": true,
+        "NoDefaultBookmarks": true,
+        "OverrideFirstRunPage": ,
+        "OverridePostUpdatePage": ,
+        "Homepage": {
+        "URL": "file:///usr/share/kali-defaults/web/homepage.html",
+        "Locked": false,
+        "StartPage": "homepage"
+        },
+        "DisableTelemetry": true,
+        "NetworkPrediction": false,
+        "DNSOverHTTPS": {
+        "Enabled": false
+        },
+        "CaptivePortal": false,
+        "FirefoxHome": {
+        "Search": true,
+        "TopSites": true,
+        "Highlights": false,
+        "Pocket": false,
+        "Snippets": false,
+        "Locked": false
+        }
+} ''' >> /usr/lib/firefox-esr/distribution/policies.json
 
     printf "\n${BRIGHT_BOLD_GREEN}\nAll finished :) ${RESET}\n"
 }
