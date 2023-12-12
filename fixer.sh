@@ -71,7 +71,7 @@ firefox_ssl(){
         "Snippets": false,
         "Locked": false
         }
-} ''' >> /usr/lib/firefox-esr/distribution/policies.json
+    } ''' >> /usr/lib/firefox-esr/distribution/policies.json
 
     printf "\n${BRIGHT_BOLD_GREEN}\nAll finished :) ${RESET}\n"
 }
