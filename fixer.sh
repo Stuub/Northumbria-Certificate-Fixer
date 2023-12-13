@@ -50,8 +50,6 @@ firefox_ssl(){
     },
     "DisplayBookmarksToolbar": true,
         "NoDefaultBookmarks": true,
-        "OverrideFirstRunPage": ,
-        "OverridePostUpdatePage": ,
         "Homepage": {
         "URL": "file:///usr/share/kali-defaults/web/homepage.html",
         "Locked": false,
